@@ -14,7 +14,13 @@
     <!-- Список задач -->
     <div class="detail__content">
       <div class="detail__todos" v-if="note.todos.length">
-        <todo-item v-for="todo in note.todos" :key="todo.id" :todo="todo" @deleteTodo="openDeleteDialog(todo)" @changeTodo="changeTodo"/>
+        <todo-item
+          v-for="todo in note.todos"
+          :key="todo.id" :todo="todo"
+          @deleteTodo="openDeleteDialog(todo)"
+          @changeTodo="changeTodo"
+          @closeEmptyTodo="closeEmptyTodo"
+        />
       </div>
       <div v-if="note.todos.length < maxCountTodos" class="detail__add-todo">
         <button class="btn success add-task-btn" @click.prevent="addTodo" title="Добавить задачу">
@@ -105,6 +111,11 @@ export default {
     /* Изменение задачи */
     changeTodo() {
       this.addToHistory();
+    },
+
+    /* Закрытие пустой задачи */
+    closeEmptyTodo(todo) {
+      this.note.todos.splice(this.note.todos.indexOf(todo), 1);
     },
 
     /* Удаление задачи из заметки */

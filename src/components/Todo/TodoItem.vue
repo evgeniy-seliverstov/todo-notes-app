@@ -16,7 +16,7 @@
     </div>
     
     <!-- Кнопки редактирования задачи (редактировать, удалить) -->
-    <div class="todo__buttons" :style="!changing ? '' : 'min-width: 155px;'">
+    <div class="todo__buttons">
       <button  v-if="changing" class="btn edit-agree success" :class="{disabled: !allowChange}" @click="changeTodo" title="Сохранить изменение">
         <img src="@/assets/svg/todo-check-agree.svg" alt="Сохранить изменение">
       </button>
@@ -26,7 +26,7 @@
       <button class="btn blue todo-edit-btn" v-if="!changing" @click="openChangingTodo" title="Изменить задачу" >
         <img src="@/assets/svg/todo-pencil.svg" alt="Изменить todo">
       </button>
-      <button class="btn error todo-delete-btn" @click="deleteTodo" title="Удалить задачу"  :style="!changing ? '' : 'margin-right: 0'">
+      <button class="btn error todo-delete-btn" v-if="!changing" @click="deleteTodo" title="Удалить задачу">
         <img src="@/assets/svg/todo-delete.svg" alt="Удалить todo">
       </button>
     </div>
@@ -93,7 +93,7 @@ export default {
         this.changingValue = "";
         this.changing = false;
       } else {
-        this.changingHelp = "Задача должна иметь описание";
+        this.$emit("closeEmptyTodo", this.todo);
       }
     },
     changeTodo() {
@@ -214,7 +214,7 @@ export default {
     max-height: 45px;
     padding: 10px 15px;
 
-    &.edit-agree, &.edit-disagree, &.todo-edit-btn {
+    &:not(:last-child) {
       margin-right: 10px;
     }
 
