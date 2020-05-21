@@ -72,12 +72,12 @@ export default {
     },
   },
   created() {
-    this.note = this.$store.getters.getNoteById(this.$route.params.id);
-    if (!this.note) {
+    let note = this.$store.getters.getNoteById(this.$route.params.id);
+    if (!note) {
       this.$router.push("/");
     } else {
-      this.note = JSON.parse(JSON.stringify(this.note));
-      this.startNote = JSON.parse(JSON.stringify(this.note));
+      this.note = JSON.parse(JSON.stringify(note));
+      this.startNote = JSON.parse(JSON.stringify(note));
     }
   },
   mounted() {
